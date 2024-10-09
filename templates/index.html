@@ -12,11 +12,11 @@
     <div class="container position-relative">
       <div class="row gy-5" data-aos="fade-in">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-          <h2>Welcome to <span>Impact</span></h2>
+          <h2>Welcome to <span>{{company_name}}</span></h2>
           <p>Empowering Success, Inspiring Growth: Your Vision, Our Expertise.</p>
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="#services" class="btn-get-started">Get Started</a>
-            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+            <a href="{{video_url}}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2">
@@ -370,7 +370,7 @@
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
                   <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
+                  <p>{{location}}</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -378,7 +378,7 @@
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h4>Email:</h4>
-                  <p>info@example.com</p>
+                  <p>{{email}}</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -386,7 +386,7 @@
                 <i class="bi bi-phone flex-shrink-0"></i>
                 <div>
                   <h4>Call:</h4>
-                  <p>+1 5589 55488 55</p>
+                  <p>{{phone}}</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -394,7 +394,7 @@
                 <i class="bi bi-clock flex-shrink-0"></i>
                 <div>
                   <h4>Open Hours:</h4>
-                  <p>Mon-Sat: 11AM - 23PM</p>
+                  <p>{{open_hours}}</p>
                 </div>
               </div><!-- End Info Item -->
             </div>
