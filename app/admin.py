@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.http import HttpRequest
-from app.models import GeneralInfo, Service
+from app.models import GeneralInfo, Service, Testimonial
 
 # Register your models here.
 
@@ -30,3 +30,13 @@ class GeneralInfoAdmin(admin.ModelAdmin):
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ['title', 'description', 'icon']
+    search_fields = ['title', 'description']
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ['username', 'user_job_title', 'display_rating_count']
+    
+    def display_rating_count(self,obj):
+        return "*" * obj.rating_count
+    
+    display_rating_count.short_description = "Rating"
