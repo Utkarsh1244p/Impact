@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.http import HttpRequest
-from app.models import GeneralInfo, Service, Testimonial
+from app.models import  (
+    GeneralInfo, 
+    Service, 
+    Testimonial, 
+    FrequentlyAskedQuestion
+    )
 
 # Register your models here.
 
@@ -40,3 +45,8 @@ class TestimonialAdmin(admin.ModelAdmin):
         return "*" * obj.rating_count
     
     display_rating_count.short_description = "Rating"
+
+
+@admin.register(FrequentlyAskedQuestion)
+class FrequentlyAskedQuestionAdmin(admin.ModelAdmin):
+    list_display = ['question', 'answer']
