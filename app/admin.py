@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.http import HttpRequest
-from app.models import GeneralInfo
+from app.models import GeneralInfo, Service
 
 # Register your models here.
 
@@ -25,3 +25,8 @@ class GeneralInfoAdmin(admin.ModelAdmin):
     
     # #show you can set field to disable update
     # readonly_fields = ['email']
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description', 'icon']
