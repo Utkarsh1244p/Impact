@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.contrib import messages
 from datetime import datetime
 from app.models import (
     GeneralInfo, 
@@ -37,3 +41,38 @@ def blog(request):
 
 def blogDetails(request):
     return render(request, 'blog-details.html', {})
+
+def submit_form(request):
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+
+    context = {
+        'name' : name,
+        'email' : email,
+        'subject' : subject,
+        'message' : message,
+    }
+
+    html_content = render_to_string('email.html', context)
+
+    try:
+        send_mail(
+            subject = subject,
+            message = None,
+            html_message= html_content, 
+            from_email = settings.EMAIL_HOST_USER,
+            recipient_list = [settings.EMAIL_HOST_USER],
+            fail_silently = False,
+        )
+    except Exception as e:
+        messages.error(request, "There is an error, could not send email.")
+    else:
+        messages.success(request, "Email sent successfully.")
+
+
+    return redirect('home')
