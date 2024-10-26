@@ -5,12 +5,14 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from app.models import (
     GeneralInfo, 
     Service, 
     Testimonial, 
     FrequentlyAskedQuestion,
-    ContactFormLog
+    ContactFormLog,
+    Blog
 )
 
 # Create your views here.
@@ -19,6 +21,14 @@ def index(request):
     services = Service.objects.all()
     testimonials = Testimonial.objects.all()
     faqs = FrequentlyAskedQuestion.objects.all() 
+    recent_blogs = Blog.objects.all().order_by("-created_at")[:3]
+    # for blog in recent_blogs:
+    #     print(f"blog : {blog}")
+    #     print(f"blog.created_at : {blog.created_at}")
+    #     print(f"blog.author : {blog.author}")
+    #     print(f"blog.author.country : {blog.author.country}")
+    #     print("")
+
 
     context = {
         'company_name' : general_info.company_name,
@@ -35,14 +45,37 @@ def index(request):
         'services' : services,
         'testimonials' : testimonials,
         'faqs' : faqs,
+        'blogs' : recent_blogs,
     }
     return render(request, 'index.html', context)
 
-def blog(request):
-    return render(request, 'blog.html', {})
+def blogs(request):
+    all_blogs = Blog.objects.all()
+    paginator = Paginator(all_blogs, 3)
+    page = request.GET.get('page')
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger:
+        blogs = paginator.page(1)
+    except EmptyPage:
+        blogs = paginator.page(paginator.num_pages)
 
-def blogDetails(request):
-    return render(request, 'blog-details.html', {})
+    # print(f"paginator.num_pages : {paginator.num_pages}")
+    context = {
+        'blogs' : blogs,
+        'paginator' : paginator
+    }
+    return render(request, 'blogs.html', context)
+
+def blog_details(request, blog_id):
+    blog = Blog.objects.get(id=blog_id)
+    recent_blogs = Blog.objects.all().exclude(id=blog_id).order_by("-created_at")[:2]
+
+    context = {
+        'blog' : blog,
+        'recent_blogs' : recent_blogs
+    }
+    return render(request, 'blog-details.html', context)
 
 def submit_form(request):
 

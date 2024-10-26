@@ -18,7 +18,9 @@
 <body>
 
   <!-- ======= Header ======= -->
-  {% include 'assets/header.html' %}
+  {% if 'blog' not in request.path %}
+    {% include 'assets/header.html' %}
+  {% endif %}
 
  <!-- ======= Main ======= -->
   {% block content %} {% endblock %}

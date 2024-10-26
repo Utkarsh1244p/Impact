@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class GeneralInfo(models.Model):
@@ -65,3 +67,24 @@ class ContactFormLog(models.Model):
 
     def __str__(self):
         return self.email
+    
+class Author (models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=50)
+    joined_name = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+
+class Blog(models.Model):
+    blog_image = models.CharField(max_length=255, blank=True, null=True)
+    category = models.CharField(max_length=50, blank=True, null=True)
+    title = models.CharField(max_length=255)
+    author = models.ForeignKey(Author,on_delete=models.PROTECT, blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    content = RichTextField()  #models.TextField()
+
+    def __str__(self):
+        return self.title
